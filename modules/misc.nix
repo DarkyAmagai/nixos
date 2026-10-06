@@ -8,5 +8,6 @@
         powershell
         openvpn
         fastfetch
+	gh
     ];
 }
