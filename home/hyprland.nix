@@ -11,7 +11,9 @@ in
         portalPackage = null;
         settings = {
             "$mod" = "SUPER";
-            monitor = ",preferred,auto,auto";
+            # La VM (virtio-gpu) solo acepta 1024x768; con escala "auto" Hyprland
+            # elegía 2 y dejaba un escritorio de 512x384.
+            monitor = ",preferred,auto,1";
             exec-once = [
                 "quickshell"
                 "swaybg -i ~/.config/background.jpg -m fill"
