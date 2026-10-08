@@ -2,9 +2,13 @@ import Quickshell.Wayland
 import QtQuick
 
 Text {
-    text: ToplevelManager.activeTopLevel?.title ?? ""
-    width: Math.min(implicitWidth, 400)
+    property real maxWidth: 400
+    readonly property var toplevel: ToplevelManager.activeToplevel
+
+    text: toplevel?.title ?? ""
+    visible: text !== ""
+    width: Math.min(implicitWidth, maxWidth)
     elide: Text.ElideRight
-    color: "#bac2de"
-    font { family: "JetBrainsMono Nerd Font"; pixelSize: 13 }
+    color: Theme.subtext1
+    font { family: Theme.font; pixelSize: Theme.fontSize }
 }

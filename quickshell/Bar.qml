@@ -1,49 +1,67 @@
 import Quickshell
+import Quickshell.Wayland
 import QtQuick
 import QtQuick.Layouts
 
 PanelWindow {
-  required property var modelData
-  screen: modelData
+    id: bar
+    required property var modelData
+    screen: modelData
 
-  anchors { top: true; left: true; right: true }
-  implicitHeight: 42
-  color: "transparent"
+    anchors { top: true; left: true; right: true }
+    implicitHeight: 44
+    color: "transparent"
+    WlrLayershell.namespace: "quickshell-bar"
 
-  Launcher { id: launcher }
+    Rectangle {
+        id: frame
+        anchors.fill: parent
+        anchors { topMargin: 8; leftMargin: 10; rightMargin: 10 }
+        radius: height / 2
+        color: Theme.barBg
+        border.color: Theme.border
+        border.width: 1
 
-  Rectangle {
-    anchors.fill: parent
-    anchors { topMargin: 8; leftMargin: 10; rightMargin: 10 }
-    radius: height / 2
-    color: "#cc1e1e2e"
-    border.color: "#40cba6f7"
-    border.width: 1
+        RowLayout {
+            id: leftGroup
+            anchors.left: parent.left
+            anchors.leftMargin: 5
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: 8
 
-    LauncherButton {
-      anchors.left: parent.left
-      anchors.leftMargin: 18
-      anchors.verticalCenter: parent.verticalCenter
-      onClicked: launcher.toggle()
+            LauncherButton {}
+            Pill { Workspaces {} }
+        }
+
+        WindowTitle {
+            anchors.centerIn: parent
+            maxWidth: Math.max(0, frame.width - 2 * Math.max(leftGroup.width, rightGroup.width) - 60)
+        }
+
+        RowLayout {
+            id: rightGroup
+            anchors.right: parent.right
+            anchors.rightMargin: 5
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: 8
+
+            Pill {
+                visible: tray.hasItems
+                Tray { id: tray; parentWindow: bar }
+            }
+            Pill {
+                Volume {}
+                Battery {}
+            }
+            Pill {
+                Clock { onClicked: calendar.visible = !calendar.visible }
+            }
+            PowerButton {}
+        }
     }
 
-    Workspaces {
-      anchors.left: parent.left
-      anchors.leftMargin: 58
-      anchors.verticalCenter: parent.verticalCenter
+    CalendarPopup {
+        id: calendar
+        screen: bar.screen
     }
-
-    WindowTitle {
-      anchors.centerIn: parent
-    }
-
-    RowLayout {
-      anchors.right: parent.right
-      anchors.rightMargin: 18
-      anchors.verticalCenter: parent.verticalCenter
-      spacing: 16
-      Volume {}
-      Clock {}
-    }
-  }
 }

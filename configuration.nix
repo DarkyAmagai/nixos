@@ -28,7 +28,9 @@
         shell = pkgs.fish;
         extraGroups = [
             "wheel"
-            "NetworkManager"
+            "networkmanager"
+            "video"
+            "audio"
         ];
     };
  
@@ -71,11 +73,7 @@
         btop
         tree
         unzip
-        kitty
-        fuzzel
-    	swaybg
         neovim
-        inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
 
     services.openssh = {
@@ -92,27 +90,13 @@
         "flakes"
     ];
 
-    programs.hyprland.enable = true;
-
-    fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
-
     services.pipewire = {
         enable = true;
         pulse.enable = true;
     };
 
     nixpkgs.config.allowUnfree = true;
-    programs.thunar = {
-        enable = true;
-        plugins = with pkgs.xfce; [
-            thunar-archive-plugin
-            thunar-volman
-        ];
-    };
-
-    services.gvfs.enable = true;
-    services.tumbler.enable = true;
-    environment.variables.QT_QPA_PLATFORMTHEME = "qt6ct";
+    # Escritorio (Hyprland, Quickshell, login, fuentes...) en modules/desktop.nix
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
 
