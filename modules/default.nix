@@ -1,5 +1,6 @@
 {
     imports = [
+        ./desktop.nix
         ./recon.nix
         ./web.nix
         ./passwords.nix

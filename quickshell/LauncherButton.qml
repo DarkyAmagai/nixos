@@ -1,31 +1,29 @@
-import Quickshell.Hyprland
 import QtQuick
 
-Item {
-  id: root
-  signal clicked()
-  implicitWidth: 28
-  implicitHeight: 28
+Rectangle {
+    id: root
+    implicitWidth: 28
+    implicitHeight: 28
+    radius: width / 2
+    color: mouse.containsMouse || ShellState.launcherOpen ? Theme.hoverBg : "transparent"
+    Behavior on color { ColorAnimation { duration: Theme.animFast } }
 
-  property bool hovered: false
+    Image {
+        anchors.centerIn: parent
+        source: "nixos.svg"
+        sourceSize.width: 20
+        sourceSize.height: 20
+        fillMode: Image.PreserveAspectFit
+        smooth: true
+        rotation: ShellState.launcherOpen ? 60 : 0
+        Behavior on rotation { NumberAnimation { duration: Theme.anim; easing.type: Easing.OutCubic } }
+    }
 
-  Image {
-    anchors.centerIn: parent
-    source: "nixos.svg"
-    sourceSize.width: 22
-    sourceSize.height: 22
-    fillMode: Image.PreserveAspectFit
-    smooth: true
-    opacity: root.hovered ? 1.0 : 0.85
-    Behavior on opacity { NumberAnimation { duration: 150 } }
-  }
-
-  MouseArea {
-    anchors.fill: parent
-    cursorShape: Qt.PointingHandCursor
-    hoverEnabled: true
-    onEntered: root.hovered = true
-    onExited: root.hovered = false
-    onClicked: root.clicked()
-  }
+    MouseArea {
+        id: mouse
+        anchors.fill: parent
+        hoverEnabled: true
+        cursorShape: Qt.PointingHandCursor
+        onClicked: ShellState.toggleLauncher()
+    }
 }

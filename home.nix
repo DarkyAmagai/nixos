@@ -1,5 +1,10 @@
 { config, pkgs, ... }:
 {
+    imports = [
+        ./home/hyprland.nix
+        ./home/desktop.nix
+    ];
+
     home.username = "ph1shr";
     home.homeDirectory = "/home/ph1shr";
     home.stateVersion = "26.05";
@@ -9,6 +14,7 @@
             rebuild = "sudo nixos-rebuild switch --flake ~/nixos#macky";
             ll = "ls -la";
         };
+        interactiveShellInit = "set -g fish_greeting";
         plugins = [
             {
                 name = "tide";
@@ -78,86 +84,8 @@
 		gtk.enable = true;
 		package = pkgs.bibata-cursors;
 		name = "Bibata-Modern-Classic";
-		size = 17;
+		size = 24;
 	};
-
-    wayland.windowManager.hyprland = {
-        enable = true;
-        configType = "hyprlang";
-        package = null; # --System Package--
-        portalPackage = null;
-        settings = {
-            "$mod" = "SUPER";
-            monitor = ",preffered,auto,auto";
-            exec-once = [
-                "quickshell"
-                "swaybg -i ~/.config/background.jpg -m fill"
-            ];
-            
-            input.kb_layout = "latam";
-            bind = [
-                "$mod, Return, exec, kitty"
-                "$mod, D, exec, fuzzel"
-                "$mod, Q, killactive"
-                "$mod, M, exit"
-                "$mod, F, fullscreen"
-            ] ++ (builtins.concatLists (builtins.genList (i: 
-                let ws = toString (i + 1); in [
-                    "$mod, ${ws}, workspace, ${ws}"
-                    "$mod SHIFT, ${ws}, movetoworkspace, ${ws}"
-                ]) 9));
-
-            bindm = [
-                "$mod, mouse:272, movewindow"
-                "$mod, mouse:273, resizewindow"
-            ];
-            
-            general = {
-                gaps_in = 5;
-                gaps_out = 10;
-                border_size = 2;
-                "col.active_border" = "rgba(cba6f7ff) rgba(89b4faff) 45deg";
-                "col.inactive_border" = "rgba(45475aaa)";
-                layout = "dwingle";
-            };
-            decoration = {
-                rounding = 10;
-                active_opacity = 1.0;
-                inactive_opacity = 0.92;
-                blur = {
-                    enabled = true;
-                    size = 6;
-                    passes = 2;
-                };
-                shadow = {
-                    enabled = true;
-                    range = 12;
-                    render_power = 3;
-                    color = "rgba(1a1a1aee)";
-                };
-            };
-            animations = {
-                enabled = true;
-                bezier = [ "suave, 0.05, 0.9, 0.1, 1.05" ];
-                animation = [
-                    "windows, 1, 6, suave"
-                    "windowsOut, 1, 6, default, popin 80%"
-                    "border, 1, 10, default"
-                    "fade, 1, 6, default"
-                    "workspaces, 1, 5, default, slide"
-                ];
-            };
-
-            env = [
-                "QT_QPA_PLATFORMTHEME,qt6ct"
-            ];
-
-            misc = {
-                disable_hyprland_logo = true;
-                disable_splash_rendering = true;
-            };
-        };
-    };
 
     xdg.configFile."quickshell".source = config.lib.file.mkOutOfStoreSymlink "/home/ph1shr/nixos/quickshell";
 }
