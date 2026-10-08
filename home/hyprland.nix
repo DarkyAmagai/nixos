@@ -51,7 +51,7 @@ in
                 "$mod, F, fullscreen"
                 "$mod, V, togglefloating"
                 "$mod, P, pseudo"
-                "$mod, T, togglesplit"
+                "$mod, T, layoutmsg, togglesplit"
                 "$mod, C, centerwindow"
 
                 # Foco (flechas y vim)
@@ -126,7 +126,6 @@ in
             };
 
             dwindle = {
-                pseudotile = true;
                 preserve_split = true;
             };
 
