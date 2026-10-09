@@ -11,9 +11,9 @@ in
         portalPackage = null;
         settings = {
             "$mod" = "SUPER";
-            # La VM (virtio-gpu) solo acepta 1024x768; con escala "auto" Hyprland
-            # elegía 2 y dejaba un escritorio de 512x384.
-            monitor = ",preferred,auto,1";
+            # En Parallels la resolución sigue al tamaño de la ventana (maximizada en
+            # la MacBook Pro 16": 3456x2168). Escala 2 = 1728x1084 lógicos, como macOS.
+            monitor = ",preferred,auto,2";
             exec-once = [
                 "quickshell"
                 "swaybg -i ~/.config/background.jpg -m fill"
