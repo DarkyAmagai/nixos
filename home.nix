@@ -84,7 +84,7 @@
 		gtk.enable = true;
 		package = pkgs.bibata-cursors;
 		name = "Bibata-Modern-Classic";
-		size = 24;
+		size = 20; # similar al cursor de macOS
 	};
 
     xdg.configFile."quickshell".source = config.lib.file.mkOutOfStoreSymlink "/home/ph1shr/nixos/quickshell";

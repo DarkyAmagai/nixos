@@ -21,7 +21,7 @@ in
 
             env = [
                 "QT_QPA_PLATFORMTHEME,qt6ct"
-                "XCURSOR_SIZE,24"
+                "XCURSOR_SIZE,20"
             ];
 
             input = {
