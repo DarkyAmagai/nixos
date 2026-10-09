@@ -172,6 +172,13 @@ in
                 ];
             };
 
+            # kitty pide por sí mismo el estado maximizado al abrirse, y la nueva
+            # ventana tapaba a la anterior. Se ignora esa petición para que las
+            # terminales se acomoden en mosaico.
+            windowrule = [
+                "suppress_event maximize, match:class ^kitty$"
+            ];
+
             # Blur detrás de la barra y paneles de Quickshell. Los paneles ya se
             # animan desde QML, así que Hyprland no les añade otra animación.
             layerrule = [
