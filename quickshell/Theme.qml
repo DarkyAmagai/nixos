@@ -24,8 +24,12 @@ Singleton {
     readonly property color peach: "#fab387"
     readonly property color red: "#f38ba8"
 
-    readonly property color barBg: "#d91e1e2e"
-    readonly property color pillBg: "#99313244"
+    // Fondos semitransparentes: Hyprland aplica blur detrás (layerrule).
+    readonly property color barBg: "#bf1e1e2e"
+    readonly property color popupBg: "#d91e1e2e"
+    readonly property color pillBg: "#80313244"
+    readonly property color pillHover: "#b345475a"
+    readonly property color pillActive: "#cc45475a"
     readonly property color hoverBg: "#45475a"
     readonly property color scrim: "#99000000"
     readonly property color border: "#40cba6f7"
@@ -33,6 +37,6 @@ Singleton {
     readonly property string font: "JetBrainsMono Nerd Font"
     readonly property int fontSize: 13
 
-    readonly property int animFast: 140
-    readonly property int anim: 220
+    readonly property int animFast: 90
+    readonly property int anim: 150
 }

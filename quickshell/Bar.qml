@@ -9,9 +9,22 @@ PanelWindow {
     screen: modelData
 
     anchors { top: true; left: true; right: true }
-    implicitHeight: 44
+    implicitHeight: 46
     color: "transparent"
     WlrLayershell.namespace: "quickshell-bar"
+
+    // Panel abierto en esta pantalla ("", "calendar" o "battery") y su alineación.
+    property string popup: ""
+    property real popupRight: 10
+
+    function togglePopup(name, item) {
+        if (popup === name) {
+            popup = "";
+            return;
+        }
+        popupRight = Math.max(10, bar.width - item.mapToItem(null, item.width, 0).x);
+        popup = name;
+    }
 
     Rectangle {
         id: frame
@@ -43,25 +56,47 @@ PanelWindow {
             anchors.right: parent.right
             anchors.rightMargin: 5
             anchors.verticalCenter: parent.verticalCenter
-            spacing: 8
+            spacing: 6
 
             Pill {
                 visible: tray.hasItems
                 Tray { id: tray; parentWindow: bar }
             }
+            Pill { Volume {} }
             Pill {
-                Volume {}
-                Battery {}
+                id: batteryPill
+                visible: battery.present
+                interactive: true
+                active: bar.popup === "battery"
+                onClicked: bar.togglePopup("battery", batteryPill)
+                Battery { id: battery; active: batteryPill.active }
             }
             Pill {
-                Clock { onClicked: calendar.visible = !calendar.visible }
+                id: clockPill
+                interactive: true
+                active: bar.popup === "calendar"
+                onClicked: bar.togglePopup("calendar", clockPill)
+                Clock { active: clockPill.active }
             }
             PowerButton {}
         }
     }
 
     CalendarPopup {
-        id: calendar
         screen: bar.screen
+        barWindow: bar
+        open: bar.popup === "calendar"
+        rightOffset: bar.popupRight
+        onDismissed: bar.popup = ""
+        WlrLayershell.namespace: "quickshell-calendar"
+    }
+
+    BatteryPopup {
+        screen: bar.screen
+        barWindow: bar
+        open: bar.popup === "battery"
+        rightOffset: bar.popupRight
+        onDismissed: bar.popup = ""
+        WlrLayershell.namespace: "quickshell-battery"
     }
 }

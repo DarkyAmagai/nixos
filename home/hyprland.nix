@@ -151,24 +151,34 @@ in
                 };
             };
 
+            # Animaciones rápidas (velocidad en décimas de segundo).
             animations = {
                 enabled = true;
                 bezier = [
-                    "suave, 0.05, 0.9, 0.1, 1.05"
+                    "snap, 0.2, 0.9, 0.1, 1"
                     "easeOut, 0.16, 1, 0.3, 1"
                     "linear, 0, 0, 1, 1"
                 ];
                 animation = [
-                    "windows, 1, 6, suave, slide"
-                    "windowsOut, 1, 5, easeOut, popin 80%"
-                    "border, 1, 10, default"
+                    "windowsIn, 1, 3, snap, popin 90%"
+                    "windowsOut, 1, 2, easeOut, popin 90%"
+                    "windowsMove, 1, 3, snap, slide"
+                    "border, 1, 4, easeOut"
                     "borderangle, 1, 80, linear, loop"
-                    "fade, 1, 6, default"
-                    "layers, 1, 4, easeOut, fade"
-                    "workspaces, 1, 5, easeOut, slide"
-                    "specialWorkspace, 1, 5, easeOut, slidevert"
+                    "fade, 1, 2.5, easeOut"
+                    "layers, 1, 2.5, easeOut, fade"
+                    "workspaces, 1, 3, snap, slide"
+                    "specialWorkspace, 1, 3, snap, slidevert"
                 ];
             };
+
+            # Blur detrás de la barra y paneles de Quickshell. Los paneles ya se
+            # animan desde QML, así que Hyprland no les añade otra animación.
+            layerrule = [
+                "blur on, match:namespace ^(quickshell-(bar|calendar|battery|osd|launcher|power))$"
+                "ignore_alpha 0.2, match:namespace ^(quickshell-(bar|calendar|battery|osd|launcher|power))$"
+                "no_anim on, match:namespace ^(quickshell-(calendar|battery|launcher|power))$"
+            ];
 
             misc = {
                 disable_hyprland_logo = true;

@@ -24,8 +24,9 @@
 
     security.rtkit.enable = true;
 
-    # Batería en la barra de Quickshell.
+    # Batería en la barra de Quickshell y modos de energía en su panel.
     services.upower.enable = true;
+    services.power-profiles-daemon.enable = true;
 
     fonts = {
         packages = with pkgs; [
