@@ -1,4 +1,5 @@
 import Quickshell
+import Quickshell.Io
 import Quickshell.Services.UPower
 import QtQuick
 import QtQuick.Layouts
@@ -36,6 +37,20 @@ PopupPanel {
             return t ? "Quedan " + t : "Con batería";
         }
         return "Batería";
+    }
+
+    // Los modos de energía necesitan power-profiles-daemon; se comprueba al abrir.
+    property bool ppdAvailable: true
+
+    Process {
+        id: ppdCheck
+        command: ["systemctl", "is-active", "--quiet", "power-profiles-daemon.service"]
+        onExited: (code, status) => root.ppdAvailable = code === 0
+    }
+
+    Connections {
+        target: root
+        function onOpenChanged() { if (root.open) ppdCheck.running = true; }
     }
 
     readonly property real health: {
@@ -165,7 +180,7 @@ PopupPanel {
             Rectangle {
                 id: btn
                 required property var modelData
-                readonly property bool active: PowerProfiles.profile === modelData.profile
+                readonly property bool active: root.ppdAvailable && PowerProfiles.profile === modelData.profile
 
                 visible: modelData.profile !== PowerProfile.Performance || PowerProfiles.hasPerformanceProfile
                 Layout.fillWidth: true
@@ -175,6 +190,7 @@ PopupPanel {
                 color: active ? Theme.surface1 : btnMouse.containsMouse ? Theme.surface0 : "transparent"
                 border.color: active ? modelData.color : Theme.surface0
                 border.width: 1
+                opacity: root.ppdAvailable ? 1 : 0.4
                 Behavior on color { ColorAnimation { duration: Theme.animFast } }
 
                 Column {
@@ -197,11 +213,21 @@ PopupPanel {
                 MouseArea {
                     id: btnMouse
                     anchors.fill: parent
+                    enabled: root.ppdAvailable
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: PowerProfiles.profile = btn.modelData.profile
                 }
             }
         }
+    }
+
+    Text {
+        Layout.fillWidth: true
+        visible: !root.ppdAvailable
+        text: "power-profiles-daemon no está activo. Ejecuta rebuild para usar los modos."
+        wrapMode: Text.WordWrap
+        color: Theme.peach
+        font { family: Theme.font; pixelSize: 11 }
     }
 }
