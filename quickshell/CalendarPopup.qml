@@ -2,7 +2,6 @@ import Quickshell
 import Quickshell.Wayland
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
 
 // Calendario que se despliega bajo el reloj.
 PanelWindow {
@@ -92,39 +91,57 @@ PanelWindow {
                 }
             }
 
-            DayOfWeekRow {
-                Layout.fillWidth: true
-                locale: grid.locale
-                delegate: Text {
-                    required property string shortName
-                    text: shortName.slice(0, 2)
-                    horizontalAlignment: Text.AlignHCenter
-                    color: Theme.overlay1
-                    font { family: Theme.font; pixelSize: 11; bold: true }
-                }
-            }
-
-            MonthGrid {
+            // Rejilla propia (7x6): MonthGrid no da ancho a sus celdas y no dibujaba los días.
+            GridLayout {
                 id: grid
                 Layout.fillWidth: true
-                month: root.month
-                year: root.year
-                spacing: 2
+                columns: 7
+                rowSpacing: 2
+                columnSpacing: 2
 
-                delegate: Rectangle {
-                    required property var model
-                    readonly property bool isToday: model.today
-                    readonly property bool inMonth: model.month === grid.month
+                readonly property int firstDow: Qt.locale().firstDayOfWeek
+                readonly property var start: {
+                    const first = new Date(root.year, root.month, 1);
+                    const offset = (first.getDay() - firstDow + 7) % 7;
+                    return new Date(root.year, root.month, 1 - offset);
+                }
 
-                    implicitHeight: 30
-                    radius: 8
-                    color: isToday ? Theme.mauve : "transparent"
-
+                Repeater {
+                    model: 7
                     Text {
-                        anchors.centerIn: parent
-                        text: parent.model.day
-                        color: parent.isToday ? Theme.base : parent.inMonth ? Theme.fg : Theme.surface2
-                        font { family: Theme.font; pixelSize: 12; bold: parent.isToday }
+                        required property int index
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        horizontalAlignment: Text.AlignHCenter
+                        text: Qt.locale().dayName((grid.firstDow + index) % 7, Locale.ShortFormat).slice(0, 2)
+                        color: Theme.overlay1
+                        font { family: Theme.font; pixelSize: 11; bold: true }
+                    }
+                }
+
+                Repeater {
+                    model: 42
+                    Rectangle {
+                        id: cell
+                        required property int index
+                        readonly property var day: new Date(grid.start.getFullYear(), grid.start.getMonth(), grid.start.getDate() + index)
+                        readonly property bool inMonth: day.getMonth() === root.month
+                        readonly property bool isToday: day.toDateString() === root.today.toDateString()
+
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        implicitHeight: 30
+                        radius: 8
+                        color: isToday ? Theme.mauve : dayMouse.containsMouse ? Theme.surface0 : "transparent"
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: cell.day.getDate()
+                            color: cell.isToday ? Theme.base : cell.inMonth ? Theme.fg : Theme.surface2
+                            font { family: Theme.font; pixelSize: 12; bold: cell.isToday }
+                        }
+
+                        MouseArea { id: dayMouse; anchors.fill: parent; hoverEnabled: true }
                     }
                 }
             }
