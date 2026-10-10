@@ -11,6 +11,8 @@
         python3Packages.requests
         python3Packages.pwntools
         pipx
+        uv
+        claude-code
         go
         ruby
         powershell
