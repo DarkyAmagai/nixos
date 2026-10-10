@@ -12,6 +12,7 @@
         python3Packages.pwntools
         pipx
         uv
+        gnumake
         claude-code
         go
         ruby
