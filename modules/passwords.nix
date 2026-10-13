@@ -12,5 +12,8 @@
         # Generación/mutación de diccionarios
         crunch
         cewl
+        # Añadidos del kit (verificados en nixpkgs aarch64)
+        medusa
+        ncrack
     ];
 }

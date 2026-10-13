@@ -20,5 +20,10 @@
         iperf3
         # Escaneo autenticado de red
         netexec
+        # Añadidos del kit (verificados en nixpkgs aarch64)
+        bully
+        wifite2
+        hcxtools
+        hcxdumptool
     ];
 }

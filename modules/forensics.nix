@@ -28,5 +28,7 @@
         # CTF / cripto
         hashcat
         openssl
+        # Añadidos del kit (verificados en nixpkgs aarch64)
+        binutils
     ];
 }

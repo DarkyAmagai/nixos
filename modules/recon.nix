@@ -26,5 +26,8 @@
         exploitdb
         httpx
         asnmap
+        # Añadidos del kit (verificados en nixpkgs aarch64)
+        assetfinder
+        maltego
     ];
 }

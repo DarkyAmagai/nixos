@@ -21,5 +21,8 @@
         # Listas de palabras
         seclists
         wordlists
+        # Añadidos del kit (verificados en nixpkgs aarch64)
+        commix
+        dirbuster
     ];
 }
