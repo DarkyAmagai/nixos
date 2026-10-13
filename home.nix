@@ -8,6 +8,9 @@
     home.username = "ph1shr";
     home.homeDirectory = "/home/ph1shr";
     home.stateVersion = "26.05";
+    home.packages = [
+        pkgs.claude-code
+    ];
     programs.fish = {
         enable = true;
         shellAliases = {
