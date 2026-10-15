@@ -9,5 +9,6 @@
         ./forensics.nix
         ./osint.nix
         ./misc.nix
+        ./pentestgpt.nix
     ];
 }
