@@ -25,4 +25,12 @@
         commix
         dirbuster
     ];
+
+
+    # Enlace a la ruta clásica /usr/share/wordlists (como en Kali) para que los
+    # writeups y herramientas la encuentren. Incluye rockyou.txt y seclists.
+    systemd.tmpfiles.rules = [
+        "L+ /usr/share/wordlists - - - - ${pkgs.wordlists}/share/wordlists"
+    ];
+
 }
