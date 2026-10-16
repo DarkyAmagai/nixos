@@ -18,7 +18,8 @@
 
   # Configure network connections interactively with nmcli or nmtui.
     networking.networkmanager.enable = true;
-    
+    networking.firewall.trustedInterfaces = [ "tun0" ];
+
     # Custom
     time.timeZone = "America/Mexico_City";
     programs.fish.enable = true;
