@@ -10,5 +10,6 @@
         ./osint.nix
         ./misc.nix
         ./pentestgpt.nix
+        ./htb.nix
     ];
 }
