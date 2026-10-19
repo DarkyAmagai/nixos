@@ -84,9 +84,11 @@ PanelWindow {
         height: 480
         anchors.centerIn: parent
         radius: 18
-        color: Theme.base
-        border.color: Theme.border
+        color: Theme.popupBg
+        border.color: Theme.glassEdge
         border.width: 1
+
+        GlassSheen {}
 
         ParallelAnimation {
             id: openAnim

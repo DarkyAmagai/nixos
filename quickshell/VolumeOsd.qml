@@ -47,8 +47,10 @@ PanelWindow {
         anchors.fill: parent
         radius: height / 2
         color: Theme.barBg
-        border.color: Theme.border
+        border.color: Theme.glassEdge
         border.width: 1
+
+        GlassSheen {}
 
         RowLayout {
             anchors.fill: parent

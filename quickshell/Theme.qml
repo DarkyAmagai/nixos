@@ -25,14 +25,18 @@ Singleton {
     readonly property color red: "#f38ba8"
 
     // Fondos semitransparentes: Hyprland aplica blur detrás (layerrule).
-    readonly property color barBg: "#bf1e1e2e"
-    readonly property color popupBg: "#d91e1e2e"
-    readonly property color pillBg: "#80313244"
-    readonly property color pillHover: "#b345475a"
-    readonly property color pillActive: "#cc45475a"
+    readonly property color barBg: "#8c1e1e2e"
+    readonly property color popupBg: "#a61e1e2e"
+    readonly property color pillBg: "#59313244"
+    readonly property color pillHover: "#8c45475a"
+    readonly property color pillActive: "#b345475a"
     readonly property color hoverBg: "#45475a"
-    readonly property color scrim: "#99000000"
-    readonly property color border: "#40cba6f7"
+    readonly property color scrim: "#80000000"
+    readonly property color border: "#33cba6f7"
+
+    // Glass: brillo superior y borde claro para el efecto esmerilado.
+    readonly property color glassSheen: "#18ffffff"
+    readonly property color glassEdge: "#26ffffff"
 
     readonly property string font: "JetBrainsMono Nerd Font"
     readonly property int fontSize: 13
