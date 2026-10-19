@@ -4,6 +4,7 @@ import QtQuick
 
 Text {
     id: root
+    property bool active: false
     readonly property var sink: Pipewire.defaultAudioSink
     readonly property real vol: sink?.audio?.volume ?? 0
     readonly property bool muted: sink?.audio?.muted ?? false
@@ -15,23 +16,15 @@ Text {
                                  : ""
 
     text: icon + "  " + (muted ? "mute" : Math.round(vol * 100) + "%")
-    color: muted ? Theme.overlay0 : mouse.containsMouse ? Theme.mauve : Theme.fg
+    color: muted ? Theme.overlay0 : active ? Theme.mauve : Theme.fg
     font { family: Theme.font; pixelSize: Theme.fontSize }
     Behavior on color { ColorAnimation { duration: Theme.animFast } }
 
+    // Rueda sube/baja volumen. No acepta botones: el clic pasa a la pildora
+    // (que abre el centro de control).
     MouseArea {
-        id: mouse
         anchors.fill: parent
-        hoverEnabled: true
-        cursorShape: Qt.PointingHandCursor
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-        // Clic izq: silenciar · Clic der: mezclador · Rueda: volumen
-        onClicked: mouse => {
-            if (mouse.button === Qt.RightButton)
-                Quickshell.execDetached(["pavucontrol"]);
-            else if (root.sink?.audio)
-                root.sink.audio.muted = !root.muted;
-        }
+        acceptedButtons: Qt.NoButton
         onWheel: wheel => {
             if (!root.sink?.audio) return;
             const d = wheel.angleDelta.y > 0 ? 0.05 : -0.05;

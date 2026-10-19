@@ -13,15 +13,12 @@ PanelWindow {
     color: "transparent"
     WlrLayershell.namespace: "quickshell-bar"
 
-    // Panel abierto en esta pantalla ("", "calendar" o "battery") y su alineación.
+    // Panel abierto ("", "calendar" o "control") y su alineación a la derecha.
     property string popup: ""
     property real popupRight: 10
 
     function togglePopup(name, item) {
-        if (popup === name) {
-            popup = "";
-            return;
-        }
+        if (popup === name) { popup = ""; return; }
         popupRight = Math.max(10, bar.width - item.mapToItem(null, item.width, 0).x);
         popup = name;
     }
@@ -44,6 +41,10 @@ PanelWindow {
 
             LauncherButton {}
             Pill { Workspaces {} }
+            Pill {
+                visible: media.has
+                MediaPlayer { id: media }
+            }
         }
 
         WindowTitle {
@@ -58,19 +59,25 @@ PanelWindow {
             anchors.verticalCenter: parent.verticalCenter
             spacing: 6
 
+            Pill { SysMonitor {} }
+
             Pill {
                 visible: tray.hasItems
                 Tray { id: tray; parentWindow: bar }
             }
-            Pill { Volume {} }
+
+            // Píldora del sistema: red + volumen + batería -> abre el centro de control.
             Pill {
-                id: batteryPill
-                visible: battery.present
+                id: sysPill
                 interactive: true
-                active: bar.popup === "battery"
-                onClicked: bar.togglePopup("battery", batteryPill)
-                Battery { id: battery; active: batteryPill.active }
+                active: bar.popup === "control"
+                spacing: 10
+                onClicked: bar.togglePopup("control", sysPill)
+                Network { active: sysPill.active }
+                Volume { active: sysPill.active }
+                Battery { visible: present; active: sysPill.active }
             }
+
             Pill {
                 id: clockPill
                 interactive: true
@@ -91,12 +98,12 @@ PanelWindow {
         WlrLayershell.namespace: "quickshell-calendar"
     }
 
-    BatteryPopup {
+    ControlCenter {
         screen: bar.screen
         barWindow: bar
-        open: bar.popup === "battery"
+        open: bar.popup === "control"
         rightOffset: bar.popupRight
         onDismissed: bar.popup = ""
-        WlrLayershell.namespace: "quickshell-battery"
+        WlrLayershell.namespace: "quickshell-control"
     }
 }
