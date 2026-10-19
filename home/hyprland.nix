@@ -177,6 +177,15 @@ in
             # terminales se acomoden en mosaico.
             windowrule = [
                 "suppress_event maximize, match:class ^kitty$"
+
+                # La ventana del portapapeles de Parallels aparecía al cambiar el
+                # foco de la VM. La usamos nuestra sincronización por SSH, así que
+                # la ocultamos (invisible, 1x1, fuera de pantalla, sin robar foco).
+                "float 1, match:title ^(Parallels Shared Clipboard)$"
+                "opacity 0.0 override, match:title ^(Parallels Shared Clipboard)$"
+                "size 1 1, match:title ^(Parallels Shared Clipboard)$"
+                "move 100%-1 100%-1, match:title ^(Parallels Shared Clipboard)$"
+                "suppress_event activate activatefocus, match:title ^(Parallels Shared Clipboard)$"
             ];
 
             # Blur detrás de la barra y paneles de Quickshell. Los paneles ya se
