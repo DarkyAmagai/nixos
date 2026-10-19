@@ -29,5 +29,13 @@
         # Añadidos del kit (verificados en nixpkgs aarch64)
         assetfinder
         maltego
+        # Secretos y crawling web (OSINT/recon)
+        gitleaks
+        trufflehog
+        katana
+        gau
+        waybackurls
+        urlhunter
+        webanalyze
     ];
 }
