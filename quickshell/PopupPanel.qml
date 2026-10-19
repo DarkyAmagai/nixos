@@ -58,10 +58,8 @@ PanelWindow {
         anchors.fill: parent
         radius: 20
         color: Theme.popupBg
-        border.color: Theme.glassEdge
+        border.color: Theme.border
         border.width: 1
-        GlassSheen {}
-
 
         opacity: root.open ? 1 : 0
         transform: Translate {

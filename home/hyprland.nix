@@ -118,8 +118,8 @@ in
             ];
 
             general = {
-                gaps_in = 6;
-                gaps_out = 14;
+                gaps_in = 5;
+                gaps_out = 10;
                 border_size = 2;
                 "col.active_border" = "rgba(cba6f7ff) rgba(89b4faff) 45deg";
                 "col.inactive_border" = "rgba(45475aaa)";
@@ -131,41 +131,27 @@ in
                 preserve_split = true;
             };
 
-            # Glassmorphism: blur fuerte con ruido/contraste, ventanas algo
-            # translúcidas y sombras suaves para dar profundidad.
             decoration = {
-                rounding = 14;
-                rounding_power = 2.0;
-                active_opacity = 0.95;
-                inactive_opacity = 0.86;
-                fullscreen_opacity = 1.0;
-                dim_inactive = true;
-                dim_strength = 0.1;
-                dim_special = 0.35;
+                rounding = 12;
+                active_opacity = 1.0;
+                inactive_opacity = 0.92;
+                dim_special = 0.3;
                 blur = {
                     enabled = true;
-                    size = 8;
-                    passes = 4;
-                    new_optimizations = true;
-                    xray = false;
-                    noise = 0.015;
-                    contrast = 1.1;
-                    brightness = 0.9;
-                    vibrancy = 0.2;
-                    vibrancy_darkness = 0.1;
+                    size = 6;
+                    passes = 3;
+                    vibrancy = 0.17;
                     popups = true;
-                    popups_ignorealpha = 0.2;
                 };
                 shadow = {
                     enabled = true;
-                    range = 24;
+                    range = 16;
                     render_power = 3;
-                    scale = 0.97;
-                    color = "rgba(11111bdd)";
-                    color_inactive = "rgba(11111b88)";
+                    color = "rgba(11111bcc)";
                 };
             };
 
+            # Animaciones rápidas (velocidad en décimas de segundo).
             animations = {
                 enabled = true;
                 bezier = [
@@ -196,10 +182,9 @@ in
             # Blur detrás de la barra y paneles de Quickshell. Los paneles ya se
             # animan desde QML, así que Hyprland no les añade otra animación.
             layerrule = [
-                "blur on, match:namespace ^(quickshell-(bar|calendar|control|osd|launcher|power))$"
-                "ignore_alpha 0.1, match:namespace ^(quickshell-(bar|calendar|control|osd|launcher|power))$"
-                "dim_around on, match:namespace ^(quickshell-(launcher|power))$"
-                "no_anim on, match:namespace ^(quickshell-(calendar|control|launcher|power))$"
+                "blur on, match:namespace ^(quickshell-(bar|calendar|battery|osd|launcher|power))$"
+                "ignore_alpha 0.2, match:namespace ^(quickshell-(bar|calendar|battery|osd|launcher|power))$"
+                "no_anim on, match:namespace ^(quickshell-(calendar|battery|launcher|power))$"
             ];
 
             misc = {

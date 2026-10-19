@@ -29,10 +29,8 @@ PanelWindow {
         anchors { topMargin: 8; leftMargin: 10; rightMargin: 10 }
         radius: height / 2
         color: Theme.barBg
-        border.color: Theme.glassEdge
+        border.color: Theme.border
         border.width: 1
-        GlassSheen {}
-
 
         RowLayout {
             id: leftGroup
