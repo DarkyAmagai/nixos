@@ -15,6 +15,7 @@
     boot.loader.efi.canTouchEfiVariables = true;
 
     networking.hostName = "macky"; # Define your hostname.
+    boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
 
   # Configure network connections interactively with nmcli or nmtui.
     networking.networkmanager.enable = true;
